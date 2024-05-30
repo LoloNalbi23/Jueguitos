@@ -1,59 +1,48 @@
-let posx1 = 400;
-let obstx;
-let obsty = -1;
+let spr1;
+let spr2;
 let vidas = 3;
 let puntos = 0;
 let fondo = 150;
 let size = 70;
-let barrera;
+
 
 function setup(){
 createCanvas(800,600);
 background(fondo);
+spr1 = createSprite(width/2, height - size, size, size);
+spr1.shapeColor = color(0,0,255);
+spr2 = createSprite(posx, -100, 50, 50);
+spr2.shapeColor = color(255,0,0);
 
 }
 
 function draw(){
-if(posx1 < 0){
-    posx1 = 0
-    }
-    if(posx1 > 730){
-        posx1 = 730
+if(spr1.position.x < 0){
+    spr1.position.x = 0
 }
 
-noStroke()    
-fill(0,0,255);
-square(posx1,500,70);
+if(spr1.position.x > 730){
+    spr1.position.x = 730
+}
 
-fill(255,0,0);
-circle(obstx,obsty,30);
-obsty++
-console.log(obsty)
-
-if(keyIsDown(65)){
-    noStroke()    
-    fill(fondo);
-    square(posx1,500,70);
-    posx1 -= 10
-    fill(0,0,255);
-    square(posx1,500,70);
-        }
-if (keyIsDown(68)){
-    noStroke()
-    fill(fondo);
-    square(posx1,500,70);
-    posx1 += 10
-    fill(0,0,255);
-    square(posx1,500,70);
-        }
-        if(obsty > 610){
-            obstx = random(20,780);
-            obsty = 0
-        }
+if (spr2.overlap(spr1)) {
+    vidas -= 1
+}
+else {
+    if(spr2.position.y > 600){
+    puntos++
     }
-    noStroke()
-        fill(fondo);
-        circle(obstx,obsty,30);
-        
-        fill(255,0,0);
-        circle(obstx,obsty,30);
+}
+
+spr.velocity.y = 1.5;
+
+function keyPressed() {
+    if (keyCode == 65) {
+    spr.setSpeed(1.5, 0);
+    }
+    else if (keyCode == 68) {
+    spr.setSpeed(1.5, 180);
+    }
+}
+drawSprites();
+}
