@@ -32,6 +32,7 @@ if(spr1.position.x > 730){
 
 if (spr2.overlap(spr1)) {
     vidas -= 1
+    spr1.position.x = width/2 
     console.log(vidas);
 }
 else {
