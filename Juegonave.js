@@ -2,6 +2,7 @@ let enem;
 let spr1;
 let spr2;
 let posx;
+let aux;
 let vidas = 3;
 let puntos = 0;
 let size = 70;
@@ -14,7 +15,7 @@ function setup() {
 
     setInterval(() => {
         console.log(puntos);
-        for (enem=0; enem < 5; enem++) {
+        for (enem = 0; enem < 5; enem++, aux++) {
             spr2 = createSprite(random(600), -100, 50);
             spr2.shapeColor = color(255, 0, 0);
             spr2.velocity.y = 2;
@@ -48,8 +49,8 @@ function draw() {
         spr1.position.x += 10
     }
 
-    if(enem > 0){
-        if (spr2.overlap(spr1)) {
+    if(aux > 0){
+        if (spr1.overlap(spr2)) {
             vidas -= 1
             spr1.position.x = width / 2
             spr2.position.y = -100
@@ -71,7 +72,4 @@ function draw() {
         text("GAME OVER", 300, height / 2)
     }
     drawSprites();
-}
-function keyPressed() {
-
 }
