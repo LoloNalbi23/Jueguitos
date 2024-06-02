@@ -10,12 +10,13 @@ let size = 70;
 function setup() {
     createCanvas(800, 600);
 
+    aux++
+
     spr1 = createSprite(width / 2, height - size, size, size);
     spr1.shapeColor = color(0, 0, 255);
 
     setInterval(() => {
-        console.log(puntos);
-        for (enem = 0; enem < 5; enem++, aux++) {
+        for (enem = 0; enem < 5; enem++) {
             spr2 = createSprite(random(600), -100, 50);
             spr2.shapeColor = color(255, 0, 0);
             spr2.velocity.y = 2;
