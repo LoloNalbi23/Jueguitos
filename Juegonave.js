@@ -1,6 +1,5 @@
 let enem;
-let spr1;
-let spr2;
+let play;
 let posx;
 let aux;
 let vidas = 3;
@@ -12,16 +11,18 @@ function setup() {
 
     aux++
 
-    spr1 = createSprite(width / 2, height - size, size, size);
-    spr1.shapeColor = color(0, 0, 255);
+    play = createSprite(width / 2, height - size, size, size);
+    play.shapeColor = color(0, 0, 255);
 
-    setInterval(() => {
-        for (enem = 0; enem < 5; enem++) {
-            spr2 = createSprite(random(600), -100, 50);
-            spr2.shapeColor = color(255, 0, 0);
-            spr2.velocity.y = 2;
+    enem = new Group();
+
+    for (let i = 0; i < 6; i++) {
+        let c = createSprite(
+        random(width), -100,
+        random(50,80));
+        c.shapeColor = color(random(0,255),random(0,255),random(0,255));
+        enem.add(c);
         }
-    }, 3000);
 }
 
 function draw() {
@@ -35,42 +36,48 @@ function draw() {
     fill(0, 255, 0);
     text("Puntos=" + puntos, 700, 60)
 
-    if (spr1.position.x < 35) {
-        spr1.position.x = 35
+    if (play.position.x < 35) {
+        play.position.x = 35
     }
 
-    if (spr1.position.x > 765) {
-        spr1.position.x = 765
+    if (play.position.x > 765) {
+        play.position.x = 765
     }
 
     if (keyIsDown(65)) {
-        spr1.position.x -= 10
+        play.position.x -= 10
     }
     else if (keyIsDown(68)) {
-        spr1.position.x += 10
+        play.position.x += 10
     }
+    if(vidas > 0){
+        for (let i = 0; i < enem.length; i++) {
+        enem[i].position.y += enem[i].height * 0.1;
+        if (enem[i].position.y > height) {
+        enem[i].position.y = -100;
+        puntos++
+    }
+}}
 
-    if(aux > 0){
-        if (spr1.overlap(spr2)) {
+        if (play.overlap(enem)) {
+            for(let i = 0;i < enem.width;i++){
+            enem[i].position.x = -200
+            }
+            play.position.x = width / 2
             vidas -= 1
-            spr1.position.x = width / 2
-            spr2.position.y = -100
             console.log(vidas);
         }
-        else {
-            if (spr2.position.y > 600) {
-                puntos++
-                spr2.position.y = -100
-                console.log(puntos)
-            }
-        }
-    }
     
-
     if (vidas === 0) {
         textSize(40);
         fill(0, 255, 0);
         text("GAME OVER", 300, height / 2)
+        textSize(20);
+        fill(0, 255, 0);
+        text("Puntos"+ puntos, 400, (height / 2) + 30)
+        for(let i = 0;i< enem.length;i++){
+        enem[i].position.x = -200
+        }
     }
     drawSprites();
 }
