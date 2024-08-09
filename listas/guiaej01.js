@@ -5,4 +5,4 @@ const inventory = [
     {type: "furniture", value: 1200},
     {type: "machine", value: 77}
     ];
-    console.log(inventory.filter((l)=>l.type="machine").reduce((acum,l)=>acum += l.value,0));
+    console.log(inventory.filter((l)=>l.type==="machine").reduce((acum,l)=>acum += l.value,0));
