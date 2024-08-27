@@ -1,10 +1,11 @@
 let lista = [[3, 1, 5],
              [4, 7, 2],
              [9, 8, 6]];
-
+//no es cubo magico
 let lista1 = [[2, 7, 6],
               [9, 5, 1],
               [4, 3, 8]];
+//es cubo magico
 
 let resultado
 let resultado1
@@ -29,7 +30,7 @@ function magicSquare() {
     console.log(resultado)
     console.log(resultado1)
 
-    /*Parte 2 = sumar columnas
+    //Parte 2 = sumar columnas
     resultado = lista1[0][0] + lista1[1][0] + lista1[2][0]
     resultado1= lista1[0][1] + lista1[1][1] + lista1[2][1]
 
@@ -41,7 +42,7 @@ function magicSquare() {
     }
     console.log(resultado)
     console.log(resultado1)
-    
+    /*
 
     //Parte 3 sumo en diagonal
     resultado = lista1[0][0] + lista1[1][1] + lista1[2][2]
@@ -55,7 +56,7 @@ function magicSquare() {
     }
     console.log(resultado)
     console.log(resultado1)
-}
+}*/
 
-magicSquare();*/
 }
+magicSquare();
