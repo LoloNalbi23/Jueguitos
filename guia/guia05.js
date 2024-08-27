@@ -1,4 +1,4 @@
-let n = 4876589673489538945689345
+let n = 4876756757298356984
 let primos = [];
 
 function primeFactors (n) {
