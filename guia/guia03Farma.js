@@ -18,6 +18,6 @@ function rotString(input) {
 
     return result;
 }
-const n = 1
+const n = 26
 let input = "MATE";
 console.log(rotString(input));
