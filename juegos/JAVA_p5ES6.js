@@ -27,7 +27,7 @@ function correcto(){
     textSize(40);
     fill(0);
     stroke(0);
-    text('Ganastee, muy bien, lo hiciste en ' + intentos + ' intentos',300, 300);// ${intentos}
+    text('Ganastee, muy bien, lo hiciste en ' + intentos + ' intentos',400, 300);// ${intentos}
 }
 function nocorrecto(){
     intentos++
@@ -35,10 +35,12 @@ function nocorrecto(){
     console.log(n)
     if(input.value() < n){
         console.log('es mayor')
+        square((windowWidth/2)-240, 200, 400);
         textSize(100);
         text('>',(windowWidth/2)-60, 430);
     } else {
         console.log('es menor')
+        square((windowWidth/2)-240, 200, 400);
         textSize(100);
         text('<',(windowWidth/2)-60, 430);
     }
