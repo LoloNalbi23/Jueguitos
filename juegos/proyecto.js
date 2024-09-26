@@ -28,13 +28,14 @@ function preload() {
 
 setup = () => {
     createCanvas(windowWidth,windowHeight);
-    background(150);
+    background(0);
 
     textSize(100);
-    text('Simon dice', 100, 100);
+    fill('blue')
+    text('Lolo dice', 830, 100);
     
     rojo = createSprite((width/2)-100, (height/2)-100, 200, 200);
-    rojo.shapeColor = color(darkred);
+    rojo.shapeColor = color('darkred');
 
     verde = createSprite((width/2)+100, (height/2)-100, 200, 200);
     verde.shapeColor = color(110, 154, 22);    //Sprites definidos
@@ -46,8 +47,8 @@ setup = () => {
     cyan.shapeColor = color('darkcyan');
 
     empezar = createButton('Empezar');
-    empezar.position(2000 - 400, 1400);
-    empezar.size(800, 200);
+    empezar.position(880, 150);
+    empezar.size(300, 100);
     empezar.style('font-size', '70px');
     empezar.mousePressed(empezamos);
 
@@ -67,13 +68,13 @@ setup = () => {
             verificarjugada(); // Verifica la jugada
         }
     }
-    }
+    
     verde.onMousePressed = () => {
         if (!secuenciasi && !spritepres) {
             spritepres = true;
             verde.shapeColor = color(0, 255, 0);
             Sound2.play()
-            respuesta.push(1);
+            respuesta.push(2);
         }
     }
     verde.onMouseReleased = () => {
@@ -88,7 +89,7 @@ setup = () => {
             spritepres = true;
             azul.shapeColor = color('blue');
             Sound3.play()
-            respuesta.push(2);
+            respuesta.push(1);
         }
     }
     azul.onMouseReleased = () => {
@@ -113,9 +114,43 @@ setup = () => {
             verificarjugada(); // Verifica la jugada
         }
     }
-
+}
 draw = () => {
     drawSprites();
+}
+
+empezamos = () => {
+    empezar.remove();
+    secuencia_activa = true;
+
+    n = random(0,4);       //creo la secuencia
+    n = floor(n);
+    secuencia.push(n)
+    console.log(secuencia);
+
+
+    for (let i = 0; i < secuencia.length; i++) {
+        tiempo = (i + 1) * 2000;
+        tiempo2 = (tiempo + 1000);
+
+        if (secuencia[i] == 0) {
+            setTimeout(PintarRed, tiempo);
+        } else if (secuencia[i] == 1) {
+            setTimeout(PintarBlue, tiempo);
+        } else if (secuencia[i] == 2) {
+            setTimeout(PintarGreen, tiempo);
+        } else if (secuencia[i] == 3) {
+            setTimeout(PintarCyan, tiempo);
+        }
+
+        setTimeout(despintar, tiempo2);
+    }
+    
+    setTimeout(() => {
+        secuenciasi = false;  // Desactiva la bandera al final de la secuencia
+    }, secuencia.length * 2000 + 1000);  // Calcula el tiempo total de la secuencia
+
+    respuesta = []; // Reinicia el arreglo de la jugada del jugador
 }
 
 verificarsecuencia = (arr1,arr2)  => {
@@ -130,24 +165,24 @@ verificarsecuencia = (arr1,arr2)  => {
     return true;
 }
 
-checkJugada = () => {
+verificarjugada = () => {
     if (respuesta.length === secuencia.length) {
-        if (compararArreglos(respuesta, secuencia)) {
+        if (verificarsecuencia(respuesta, secuencia)) {
             console.log("¡Correcto!");
             empezamos();
         } else {
-            Perdiste();
+            perdiste();
         }
     }
 }
 
-Perdiste = () => {
-    red.remove();
-    blue.remove();
-    green.remove();
+perdiste = () => {
+    rojo.remove();
+    verde.remove();
+    azul.remove();
     cyan.remove();
 
-    iniciar.remove();
+    empezar.remove();
 
     background('red');
 
@@ -161,40 +196,6 @@ Perdiste = () => {
     reiniciar.mousePressed(reiniciarpag);
 
 }
-
-empezamos = () => {
-    secuencia_activa = true;
-
-    n = random(0,4);       //creo la secuencia
-    n = floor(n);
-    secuencia.push(n)
-    console.log(secuencia);
-
-
-    for (let i = 0; i < secuencia.length; i++) {
-        tiempo = (i + 1) * 2000;
-        tiempo2 = (time + 1000);
-
-        if (secuencia[i] == 0) {
-            setTimeout(PintarRed, tiempo);
-        } else if (secuencia[i] == 1) {
-            setTimeout(PintarBlue, tiempo);
-        } else if (secuencia[i] == 2) {
-            setTimeout(PintarGreen, tiempo);
-        } else if (secuencia[i] == 3) {
-            setTimeout(PintarCyan, tiempo);
-        }
-
-        setTimeout(despintar, tiempo2);
-    }
-
-    setTimeout(() => {
-        secuenciasi = false;  // Desactiva la bandera al final de la secuencia
-    }, secuencia.length * 2000 + 1000);  // Calcula el tiempo total de la secuencia
-
-    jugada = []; // Reinicia el arreglo de la jugada del jugador
-}
-
     PintarRed = () => {
         rojo.shapeColor = color('red');
 }
