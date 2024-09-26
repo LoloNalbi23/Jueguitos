@@ -1,27 +1,32 @@
 let n;
 let secuencia = [];   //variables auxiliares
 let respuesta = [];
-let contador = 1;
+let empezar;
+let tiempo;
+let tiempo2;
+let reiniciar;
 
 let rojo;
 let verde;
 let azul;   //Definiendo variables de sprites
 let amarillo;
 
-let rojosound;
-let verdesound;
-let azulsound;   //Definiendo variables de sonidos
-let amarillosound;
+let Sound1;
+let Sound2;
+let Sound3;
+let Sound4;
 
-/*function preload() {
-    soundFormats('mp3', 'ogg');
-    rojosound = loadSound('/assets/doorbell');
-    verdesound = loadSound('/assets/doorbell');
-    azulsound = loadSound('/assets/doorbell');   //Precargando sonidos
-    negrosound = loadSound('/assets/doorbell');
-}*/
+let secuenciasi = false
+let spritepres = false
 
-function setup() {
+function preload() {
+    Sound1 = loadSound('Sound1.mp3');
+    Sound2 = loadSound('Sound2.mp3');
+    Sound3 = loadSound('Sound3.mp3');
+    Sound4 = loadSound('Sound4.mp3');
+}
+
+setup = () => {
     createCanvas(windowWidth,windowHeight);
     background(150);
 
@@ -29,57 +34,191 @@ function setup() {
     text('Simon dice', 100, 100);
     
     rojo = createSprite((width/2)-100, (height/2)-100, 200, 200);
-    rojo.shapeColor = color(255, 0, 0, 2);
+    rojo.shapeColor = color(darkred);
 
     verde = createSprite((width/2)+100, (height/2)-100, 200, 200);
-    verde.shapeColor = color(0, 255, 0, 2);    //Sprites definidos
+    verde.shapeColor = color(110, 154, 22);    //Sprites definidos
     
     azul = createSprite((width/2)-100, (height/2)+100, 200, 200);
-    azul.shapeColor = color(0, 0, 255, 2);
+    azul.shapeColor = color('darkblue');
     
-    amarillo = createSprite((width/2)+100, (height/2)+100, 200, 200);
-    amarillo.shapeColor = color(255, 251, 0, 2);
+    cyan = createSprite((width/2)+100, (height/2)+100, 200, 200);
+    cyan.shapeColor = color('darkcyan');
 
-    rojo.onMousePressed = function () {
-        rojo.shapeColor = color(255,0,0,5)
-        respuesta.push(0)
-        console.log(respuesta);
+    empezar = createButton('Empezar');
+    empezar.position(2000 - 400, 1400);
+    empezar.size(800, 200);
+    empezar.style('font-size', '70px');
+    empezar.mousePressed(empezamos);
+
+
+    rojo.onMousePressed = () => {
+        if (!secuenciasi && !spritepres) {
+            spritepres = true;
+            rojo.shapeColor = color('red');
+            Sound1.play()
+            respuesta.push(0);
+        }
     }
-    verde.onMousePressed = function () {
-        verde.shapeColor = color(0,255,0,5)
-        respuesta.push(1)
-        console.log(respuesta);
+    rojo.onMouseReleased = () => {
+        if (!secuenciasi) {
+            spritepres = false;
+            rojo.shapeColor = color('darkred');
+            verificarjugada(); // Verifica la jugada
+        }
     }
-    azul.onMousePressed = function () {
-        azul.shapeColor = color(0,0,255,5)
-        respuesta.push(2)
-        console.log(respuesta);
     }
-    amarillo.onMousePressed = function () {
-        amarillo.shapeColor = color(225,210,0,5)
-        respuesta.push(3)
-        console.log(respuesta);
+    verde.onMousePressed = () => {
+        if (!secuenciasi && !spritepres) {
+            spritepres = true;
+            verde.shapeColor = color(0, 255, 0);
+            Sound2.play()
+            respuesta.push(1);
+        }
     }
-} 
-function draw(){
+    verde.onMouseReleased = () => {
+        if (!secuenciasi) {
+            spritepres = false;
+            verde.shapeColor = color(110, 154, 22);
+            verificarjugada(); // Verifica la jugada
+        }
+    }
+    azul.onMousePressed = () => {
+        if (!secuenciasi && !spritepres) {
+            spritepres = true;
+            azul.shapeColor = color('blue');
+            Sound3.play()
+            respuesta.push(2);
+        }
+    }
+    azul.onMouseReleased = () => {
+        if (!secuenciasi) {
+            spritepres = false;
+            azul.shapeColor = color('darkblue');
+            verificarjugada(); // Verifica la jugada
+        }
+    }
+    cyan.onMousePressed = () => {
+        if (!secuenciasi && !spritepres) {
+            spritepres = true;
+            cyan.shapeColor = color('cyan');
+            Sound4.play()
+            respuesta.push(3);
+        }
+    }
+    cyan.onMouseReleased = () => {
+        if (!secuenciasi) {
+            spritepres = false;
+            cyan.shapeColor = color('darkcyan');
+            verificarjugada(); // Verifica la jugada
+        }
+    }
+
+draw = () => {
     drawSprites();
 }
-function gensecuencia(){
+
+verificarsecuencia = (arr1,arr2)  => {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+checkJugada = () => {
+    if (respuesta.length === secuencia.length) {
+        if (compararArreglos(respuesta, secuencia)) {
+            console.log("¡Correcto!");
+            empezamos();
+        } else {
+            Perdiste();
+        }
+    }
+}
+
+Perdiste = () => {
+    red.remove();
+    blue.remove();
+    green.remove();
+    cyan.remove();
+
+    iniciar.remove();
+
+    background('red');
+
+    textSize(400)
+    text('Perdiste', width / 2 - 700, height / 2);
+
+    reiniciar = createButton('reiniciar');
+    reiniciar.position(2000 - 400, 1400);
+    reiniciar.size(800, 200);
+    reiniciar.style('font-size', '70px');
+    reiniciar.mousePressed(reiniciarpag);
+
+}
+
+empezamos = () => {
+    secuencia_activa = true;
+
     n = random(0,4);       //creo la secuencia
     n = floor(n);
     secuencia.push(n)
-}
-function leersecuencia(){
-    for(let i = 0;i <= secuencia.length;i++){
-        secuencia[i]==0 ? rojo.shapeColor = color(255, 0,0,1) : secuencia[i]==1 ? verde.shapeColor = color(0, 255, 0,1) : secuencia[i]==1 ? azul.shapeColor = color(0,0, 255,1) : secuencia[i]==1 ? amarillo.shapeColor = color(255, 210, 0,1) : console.log('Que?')
-    } // recorro
-}
-/*fill('rgba(0, 255, 0, 0)');  //iluminar el color que quiero
+    console.log(secuencia);
 
-    rojosound.play(); //para que el sonido suene
-    verdesound.play();
-    azulsound.play();
-    negrosound.play();
-    */
 
-    //<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/addons/p5.sound.min.js"></script>
+    for (let i = 0; i < secuencia.length; i++) {
+        tiempo = (i + 1) * 2000;
+        tiempo2 = (time + 1000);
+
+        if (secuencia[i] == 0) {
+            setTimeout(PintarRed, tiempo);
+        } else if (secuencia[i] == 1) {
+            setTimeout(PintarBlue, tiempo);
+        } else if (secuencia[i] == 2) {
+            setTimeout(PintarGreen, tiempo);
+        } else if (secuencia[i] == 3) {
+            setTimeout(PintarCyan, tiempo);
+        }
+
+        setTimeout(despintar, tiempo2);
+    }
+
+    setTimeout(() => {
+        secuenciasi = false;  // Desactiva la bandera al final de la secuencia
+    }, secuencia.length * 2000 + 1000);  // Calcula el tiempo total de la secuencia
+
+    jugada = []; // Reinicia el arreglo de la jugada del jugador
+}
+
+    PintarRed = () => {
+        rojo.shapeColor = color('red');
+}
+
+    PintarGreen = () => {
+        verde.shapeColor = color(0, 255, 0);
+}
+
+    PintarBlue = () => {
+        azul.shapeColor = color('blue');
+}
+
+    PintarCyan = () => {
+        cyan.shapeColor = color('cyan');
+}
+
+// Función para regresar los colores originales
+despintar = () => {
+    rojo.shapeColor = color('darkred');
+    verde.shapeColor = color(110, 154, 22);
+    azul.shapeColor = color('darkblue');
+    cyan.shapeColor = color('darkcyan');
+}
+
+reiniciarpag = () => {
+    location.reload();
+}
