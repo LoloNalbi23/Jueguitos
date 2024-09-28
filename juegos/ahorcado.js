@@ -86,7 +86,7 @@ function keyPressed() {
 }
 
 setup = () => {
-    createCanvas(800,800);
+    createCanvas(1400,800);
     background('lightblue');
 
     jugar = createButton('Jugar');

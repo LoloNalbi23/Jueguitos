@@ -135,12 +135,19 @@ empezamos = () => {
 
         if (secuencia[i] == 0) {
             setTimeout(PintarRed, tiempo);
-        } else if (secuencia[i] == 1) {
+            Sound1.play()
+        }
+        if (secuencia[i] == 1) {
             setTimeout(PintarBlue, tiempo);
-        } else if (secuencia[i] == 2) {
+            Sound2.play()
+        }
+        if (secuencia[i] == 2) {
             setTimeout(PintarGreen, tiempo);
-        } else if (secuencia[i] == 3) {
+            Sound3.play()
+        }
+        if (secuencia[i] == 3) {
             setTimeout(PintarCyan, tiempo);
+            Sound4.play()
         }
 
         setTimeout(despintar, tiempo2);
