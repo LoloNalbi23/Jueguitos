@@ -164,7 +164,12 @@ verificarsecuencia = (arr1,arr2)  => {
     }
     return true;
 }
-
+/*if(patronJ[i]==secuencia[i]){
+i++
+}else {
+return false
+}
+*/
 verificarjugada = () => {
     if (respuesta.length === secuencia.length) {
         if (verificarsecuencia(respuesta, secuencia)) {
