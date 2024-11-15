@@ -12,16 +12,16 @@ let azul;   //Definiendo variables de sprites
 let amarillo;
 
 let Sound1;
-let Sound2;
+let Sound2;  //Variables de sonidos
 let Sound3;
 let Sound4;
 
-let secuenciasi = false
+let secuenciasi = false    //Variables buleanas
 let spritepres = false
 
 function preload() {
     Sound1 = loadSound('Sound1.mp3');
-    Sound2 = loadSound('Sound2.mp3');
+    Sound2 = loadSound('Sound2.mp3');      //Cargando sonidos 
     Sound3 = loadSound('Sound3.mp3');
     Sound4 = loadSound('Sound4.mp3');
 }
@@ -49,7 +49,7 @@ setup = () => {
     empezar = createButton('Empezar');
     empezar.position(880, 150);
     empezar.size(300, 100);
-    empezar.style('font-size', '70px');
+    empezar.style('font-size', '70px');      //Botón para empezar
     empezar.mousePressed(empezamos);
 
 
@@ -125,7 +125,7 @@ empezamos = () => {
 
     n = random(0,4);       //creo la secuencia
     n = floor(n);
-    secuencia.push(n)
+    secuencia.push(n);
     console.log(secuencia);
 
 
@@ -171,12 +171,7 @@ verificarsecuencia = (arr1,arr2)  => {
     }
     return true;
 }
-/*if(patronJ[i]==secuencia[i]){
-i++
-}else {
-return false
-}
-*/
+
 verificarjugada = () => {
     if (respuesta.length === secuencia.length) {
         if (verificarsecuencia(respuesta, secuencia)) {
