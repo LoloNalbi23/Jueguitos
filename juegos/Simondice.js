@@ -135,19 +135,19 @@ empezamos = () => {
 
         if (secuencia[i] == 0) {
             setTimeout(PintarRed, tiempo);
-            Sound1.play()
+            
         }
         if (secuencia[i] == 1) {
             setTimeout(PintarBlue, tiempo);
-            Sound2.play()
+            
         }
         if (secuencia[i] == 2) {
             setTimeout(PintarGreen, tiempo);
-            Sound3.play()
+            
         }
         if (secuencia[i] == 3) {
             setTimeout(PintarCyan, tiempo);
-            Sound4.play()
+            
         }
 
         setTimeout(despintar, tiempo2);
@@ -205,18 +205,22 @@ perdiste = () => {
 }
     PintarRed = () => {
         rojo.shapeColor = color('red');
+        Sound1.play()
 }
 
     PintarGreen = () => {
         verde.shapeColor = color(0, 255, 0);
+        Sound2.play()
 }
 
     PintarBlue = () => {
         azul.shapeColor = color('blue');
+        Sound3.play()
 }
 
     PintarCyan = () => {
         cyan.shapeColor = color('cyan');
+        Sound4.play()
 }
 
 // Función para regresar los colores originales
